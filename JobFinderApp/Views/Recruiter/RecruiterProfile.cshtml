@@ -1,0 +1,222 @@
+﻿@model JobFinderApp.ViewModels.RecruiterProfileVm
+@{
+    ViewBag.Title = "RecruiterProfile";
+    Layout = "~/Views/Shared/_RecruiterLayout.cshtml";
+}
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        background-color: #f4f6f9;
+    }
+
+    .profile-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        text-align: center;
+    }
+
+        .profile-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #e9ecef;
+        }
+
+        .profile-card h3 {
+            margin-top: 15px;
+            font-weight: 700;
+            color: #343a40;
+        }
+
+        .profile-card p {
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+    .profile-info {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 12px;
+        margin-top: 15px;
+        text-align: left;
+    }
+
+        .profile-info strong {
+            display: block;
+            color: #495057;
+            margin-bottom: 4px;
+        }
+
+    .form-section {
+        background: #fff;
+        border-radius: 20px;
+        padding: 35px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .section-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #343a40;
+    }
+
+    .section-subtitle {
+        color: #6c757d;
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 10px;
+        padding: 12px;
+        border: 1px solid #ced4da;
+    }
+
+    .btn-save {
+        background-color: #0d6efd;
+        color: #fff;
+        border-radius: 10px;
+        padding: 10px 25px;
+        border: none;
+    }
+
+        .btn-save:hover {
+            background-color: #0b5ed7;
+        }
+
+    .btn-delete {
+        background-color: #dc3545;
+        color: #fff;
+        border-radius: 10px;
+        padding: 10px 25px;
+        border: none;
+    }
+
+        .btn-delete:hover {
+            background-color: #bb2d3b;
+        }
+
+    .danger-zone {
+        background-color: #fff3f3;
+        border: 1px solid #f5c2c7;
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 35px;
+    }
+
+        .danger-zone h5 {
+            color: #dc3545;
+            font-weight: 700;
+        }
+</style>
+
+<div class="container py-5">
+    <div class="row g-4">
+
+        <!-- Left Side Company Profile -->
+        <div class="col-lg-4">
+            <div class="profile-card">
+
+              
+
+                <div class="profile-info">
+                    <strong>Email</strong>
+                    <span>@Model.Email</span>
+                </div>
+
+                <div class="profile-info">
+                    <strong>Phone</strong>
+                    <span>@Model.Mobile</span>
+                </div>
+
+                <div class="profile-info">
+                    <strong>Location</strong>
+                    <span>@Model.CompanyLocation</span>
+                </div>
+
+                <div class="profile-info">
+                    <strong>Website</strong>
+                    <span>@Model.CompanyWebsite</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side Edit Form -->
+        <div class="col-lg-8">
+            <div class="form-section">
+                <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+                    <div>
+                        <h2 class="section-title">Recruiter Profile</h2>
+                        <p class="section-subtitle">Edit company information and recruiter profile details.</p>
+                    </div>
+                </div>
+
+                @using (Html.BeginForm("UpdateCompany", "Recruiter", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.HiddenFor(model => model.RecruiterId)
+                    @Html.HiddenFor(model => model.UserId)
+
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Company Name</label>
+                            @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", placeholder = "Enter company name" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email</label>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Enter email" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Phone Number</label>
+                            @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", placeholder = "Enter phone number" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Website</label>
+                            @Html.TextBoxFor(model => model.CompanyWebsite, new { @class = "form-control", placeholder = "Enter website URL" })
+                        </div>
+
+
+
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Address</label>
+                            @Html.TextBoxFor(model => model.CompanyLocation, new { @class = "form-control", placeholder = "Enter company address" })
+                        </div>
+
+
+
+                        <div class="col-12 d-flex gap-3">
+                            <button type="submit" class="btn btn-save">
+                                <i class="fa-solid fa-floppy-disk me-2"></i>Save Changes
+                            </button>
+
+                            <a href="@Url.Action("DeleteCompany", "Recruiter", new { id = Model.RecruiterId })"
+                               class="btn btn-delete"
+                               onclick="return confirm('Are you sure you want to delete this company profile?');">
+                                <i class="fa-solid fa-trash me-2"></i>Delete Company
+                            </a>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,1047 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="JobFinderDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CandidateEducations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Degree" Type="nvarchar" MaxLength="200" />
+          <Property Name="Institution" Type="nvarchar" MaxLength="200" />
+          <Property Name="Year" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CandidateExperiences">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="200" />
+          <Property Name="JobRole" Type="nvarchar" MaxLength="200" />
+          <Property Name="Years" Type="int" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Candidates">
+          <Key>
+            <PropertyRef Name="CandidateId" />
+          </Key>
+          <Property Name="CandidateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Skills" Type="nvarchar" MaxLength="500" />
+          <Property Name="Experience" Type="int" />
+          <Property Name="ResumePath" Type="nvarchar" MaxLength="255" />
+          <Property Name="About" Type="nvarchar(max)" />
+          <Property Name="ProfileImagePath" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ConID" />
+          </Key>
+          <Property Name="ConID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="200" />
+          <Property Name="Message" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="JobApplications">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="ApplicationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="CandidateId" Type="int" Nullable="false" />
+          <Property Name="AppliedDate" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Jobs">
+          <Key>
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="JobId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobTitle" Type="nvarchar" MaxLength="200" />
+          <Property Name="JobCategory" Type="nvarchar" MaxLength="100" />
+          <Property Name="Location" Type="nvarchar" MaxLength="150" />
+          <Property Name="JobType" Type="nvarchar" MaxLength="50" />
+          <Property Name="SalaryRange" Type="nvarchar" MaxLength="50" />
+          <Property Name="ExperienceRequired" Type="nvarchar" MaxLength="50" />
+          <Property Name="Skills" Type="nvarchar(max)" />
+          <Property Name="JobDescription" Type="nvarchar(max)" />
+          <Property Name="Responsibilities" Type="nvarchar(max)" />
+          <Property Name="ApplicationDeadline" Type="date" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="RecruiterId" Type="int" />
+        </EntityType>
+        <EntityType Name="Recruiters">
+          <Key>
+            <PropertyRef Name="RecruiterId" />
+          </Key>
+          <Property Name="RecruiterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="150" />
+          <Property Name="CompanyWebsite" Type="nvarchar" MaxLength="150" />
+          <Property Name="CompanyLocation" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="ResumeAnalysis">
+          <Key>
+            <PropertyRef Name="AnalysisId" />
+          </Key>
+          <Property Name="AnalysisId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Score" Type="int" />
+          <Property Name="MissingKeywords" Type="nvarchar(max)" />
+          <Property Name="MatchedSkills" Type="nvarchar(max)" />
+          <Property Name="Suggestions" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ResumeEducation">
+          <Key>
+            <PropertyRef Name="EducationId" />
+          </Key>
+          <Property Name="EducationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ResumeId" Type="int" />
+          <Property Name="Degree" Type="nvarchar" MaxLength="100" />
+          <Property Name="Institution" Type="nvarchar" MaxLength="200" />
+          <Property Name="Year" Type="nvarchar" MaxLength="10" />
+          <Property Name="Score" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="ResumeExperience">
+          <Key>
+            <PropertyRef Name="ExperienceId" />
+          </Key>
+          <Property Name="ExperienceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ResumeId" Type="int" />
+          <Property Name="JobTitle" Type="nvarchar" MaxLength="150" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="150" />
+          <Property Name="Location" Type="nvarchar" MaxLength="150" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="IsCurrent" Type="bit" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ResumeProjects">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+          </Key>
+          <Property Name="ProjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ResumeId" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" />
+          <Property Name="Technologies" Type="nvarchar" MaxLength="200" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Resumes">
+          <Key>
+            <PropertyRef Name="ResumeId" />
+          </Key>
+          <Property Name="ResumeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="Summary" Type="nvarchar(max)" />
+          <Property Name="Skills" Type="nvarchar(max)" />
+          <Property Name="Experience" Type="nvarchar(max)" />
+          <Property Name="Education" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="City" Type="nvarchar" MaxLength="100" />
+          <Property Name="State" Type="nvarchar" MaxLength="100" />
+          <Property Name="Country" Type="nvarchar" MaxLength="100" />
+          <Property Name="ZipCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="DOB" Type="date" />
+        </EntityType>
+        <EntityType Name="ResumeSkills">
+          <Key>
+            <PropertyRef Name="SkillId" />
+          </Key>
+          <Property Name="SkillId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ResumeId" Type="int" />
+          <Property Name="SkillName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="SavedJobs">
+          <Key>
+            <PropertyRef Name="SavedJobId" />
+          </Key>
+          <Property Name="SavedJobId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="CandidateId" Type="int" Nullable="false" />
+          <Property Name="SavedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="15" />
+          <Property Name="Role" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__Candidate__UserI__0AD2A005">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Candidates" Type="Self.Candidates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Candidates">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Recruiter__UserI__0F975522">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Recruiters" Type="Self.Recruiters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Recruiters">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ResumeEdu__Resum__49C3F6B7">
+          <End Role="Resumes" Type="Self.Resumes" Multiplicity="0..1" />
+          <End Role="ResumeEducation" Type="Self.ResumeEducation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resumes">
+              <PropertyRef Name="ResumeId" />
+            </Principal>
+            <Dependent Role="ResumeEducation">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ResumeExp__Resum__534D60F1">
+          <End Role="Resumes" Type="Self.Resumes" Multiplicity="0..1" />
+          <End Role="ResumeExperience" Type="Self.ResumeExperience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resumes">
+              <PropertyRef Name="ResumeId" />
+            </Principal>
+            <Dependent Role="ResumeExperience">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ResumePro__Resum__4E88ABD4">
+          <End Role="Resumes" Type="Self.Resumes" Multiplicity="0..1" />
+          <End Role="ResumeProjects" Type="Self.ResumeProjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resumes">
+              <PropertyRef Name="ResumeId" />
+            </Principal>
+            <Dependent Role="ResumeProjects">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ResumeSki__Resum__44FF419A">
+          <End Role="Resumes" Type="Self.Resumes" Multiplicity="0..1" />
+          <End Role="ResumeSkills" Type="Self.ResumeSkills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resumes">
+              <PropertyRef Name="ResumeId" />
+            </Principal>
+            <Dependent Role="ResumeSkills">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobApplications_Candidates">
+          <End Role="Candidates" Type="Self.Candidates" Multiplicity="1" />
+          <End Role="JobApplications" Type="Self.JobApplications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidates">
+              <PropertyRef Name="CandidateId" />
+            </Principal>
+            <Dependent Role="JobApplications">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobApplications_Jobs">
+          <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
+          <End Role="JobApplications" Type="Self.JobApplications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jobs">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="JobApplications">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Jobs_Recruiters">
+          <End Role="Recruiters" Type="Self.Recruiters" Multiplicity="0..1" />
+          <End Role="Jobs" Type="Self.Jobs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recruiters">
+              <PropertyRef Name="RecruiterId" />
+            </Principal>
+            <Dependent Role="Jobs">
+              <PropertyRef Name="RecruiterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SavedJobs_Candidate">
+          <End Role="Candidates" Type="Self.Candidates" Multiplicity="1" />
+          <End Role="SavedJobs" Type="Self.SavedJobs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidates">
+              <PropertyRef Name="CandidateId" />
+            </Principal>
+            <Dependent Role="SavedJobs">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SavedJobs_Job">
+          <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
+          <End Role="SavedJobs" Type="Self.SavedJobs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jobs">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="SavedJobs">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_InsertContact" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="Subject" Type="nvarchar" Mode="In" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <EntityContainer Name="JobFinderDBModelStoreContainer">
+          <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateEducations" EntityType="Self.CandidateEducations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateExperiences" EntityType="Self.CandidateExperiences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Candidates" EntityType="Self.Candidates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobApplications" EntityType="Self.JobApplications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recruiters" EntityType="Self.Recruiters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResumeAnalysis" EntityType="Self.ResumeAnalysis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResumeEducation" EntityType="Self.ResumeEducation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResumeExperience" EntityType="Self.ResumeExperience" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResumeProjects" EntityType="Self.ResumeProjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resumes" EntityType="Self.Resumes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResumeSkills" EntityType="Self.ResumeSkills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SavedJobs" EntityType="Self.SavedJobs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Candidate__UserI__0AD2A005" Association="Self.FK__Candidate__UserI__0AD2A005">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Candidates" EntitySet="Candidates" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Recruiter__UserI__0F975522" Association="Self.FK__Recruiter__UserI__0F975522">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Recruiters" EntitySet="Recruiters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ResumeEdu__Resum__49C3F6B7" Association="Self.FK__ResumeEdu__Resum__49C3F6B7">
+            <End Role="Resumes" EntitySet="Resumes" />
+            <End Role="ResumeEducation" EntitySet="ResumeEducation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ResumeExp__Resum__534D60F1" Association="Self.FK__ResumeExp__Resum__534D60F1">
+            <End Role="Resumes" EntitySet="Resumes" />
+            <End Role="ResumeExperience" EntitySet="ResumeExperience" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ResumePro__Resum__4E88ABD4" Association="Self.FK__ResumePro__Resum__4E88ABD4">
+            <End Role="Resumes" EntitySet="Resumes" />
+            <End Role="ResumeProjects" EntitySet="ResumeProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ResumeSki__Resum__44FF419A" Association="Self.FK__ResumeSki__Resum__44FF419A">
+            <End Role="Resumes" EntitySet="Resumes" />
+            <End Role="ResumeSkills" EntitySet="ResumeSkills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobApplications_Candidates" Association="Self.FK_JobApplications_Candidates">
+            <End Role="Candidates" EntitySet="Candidates" />
+            <End Role="JobApplications" EntitySet="JobApplications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobApplications_Jobs" Association="Self.FK_JobApplications_Jobs">
+            <End Role="Jobs" EntitySet="Jobs" />
+            <End Role="JobApplications" EntitySet="JobApplications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Jobs_Recruiters" Association="Self.FK_Jobs_Recruiters">
+            <End Role="Recruiters" EntitySet="Recruiters" />
+            <End Role="Jobs" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SavedJobs_Candidate" Association="Self.FK_SavedJobs_Candidate">
+            <End Role="Candidates" EntitySet="Candidates" />
+            <End Role="SavedJobs" EntitySet="SavedJobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SavedJobs_Job" Association="Self.FK_SavedJobs_Job">
+            <End Role="Jobs" EntitySet="Jobs" />
+            <End Role="SavedJobs" EntitySet="SavedJobs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JobFinderDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Recruiter">
+          <Key>
+            <PropertyRef Name="RecruiterId" />
+          </Key>
+          <Property Name="RecruiterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="CompanyName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyWebsite" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyLocation" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Recruiter__UserI__0F975522" FromRole="Recruiters" ToRole="Users" />
+          <NavigationProperty Name="Jobs" Relationship="JobFinderDBModel.FK_Jobs_Recruiters" FromRole="Recruiter" ToRole="Job" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Recruiters" Relationship="Self.FK__Recruiter__UserI__0F975522" FromRole="Users" ToRole="Recruiters" />
+          <NavigationProperty Name="Candidates" Relationship="JobFinderDBModel.FK__Candidate__UserI__0AD2A005" FromRole="User" ToRole="Candidate" />
+        </EntityType>
+        <Association Name="FK__Recruiter__UserI__0F975522">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Recruiters" Type="Self.Recruiter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Recruiters">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JobFinderDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Recruiters" EntityType="Self.Recruiter" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Recruiter__UserI__0F975522" Association="Self.FK__Recruiter__UserI__0F975522">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Recruiters" EntitySet="Recruiters" />
+          </AssociationSet>
+          <EntitySet Name="Candidates" EntityType="JobFinderDBModel.Candidate" />
+          <AssociationSet Name="FK__Candidate__UserI__0AD2A005" Association="JobFinderDBModel.FK__Candidate__UserI__0AD2A005">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Candidate" EntitySet="Candidates" />
+          </AssociationSet>
+          <EntitySet Name="CandidateEducations" EntityType="JobFinderDBModel.CandidateEducation" />
+          <EntitySet Name="CandidateExperiences" EntityType="JobFinderDBModel.CandidateExperience" />
+          <EntitySet Name="Jobs" EntityType="JobFinderDBModel.Job" />
+          <AssociationSet Name="FK_Jobs_Recruiters" Association="JobFinderDBModel.FK_Jobs_Recruiters">
+            <End Role="Recruiter" EntitySet="Recruiters" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <EntitySet Name="Contacts" EntityType="JobFinderDBModel.Contact" />
+          <FunctionImport Name="sp_InsertContact">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Subject" Mode="In" Type="String" />
+            <Parameter Name="Message" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="JobApplications" EntityType="JobFinderDBModel.JobApplication" />
+          <AssociationSet Name="FK_JobApplications_Candidates" Association="JobFinderDBModel.FK_JobApplications_Candidates">
+            <End Role="Candidate" EntitySet="Candidates" />
+            <End Role="JobApplication" EntitySet="JobApplications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobApplications_Jobs" Association="JobFinderDBModel.FK_JobApplications_Jobs">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="JobApplication" EntitySet="JobApplications" />
+          </AssociationSet>
+          <EntitySet Name="SavedJobs" EntityType="JobFinderDBModel.SavedJob" />
+          <AssociationSet Name="FK_SavedJobs_Candidate" Association="JobFinderDBModel.FK_SavedJobs_Candidate">
+            <End Role="Candidate" EntitySet="Candidates" />
+            <End Role="SavedJob" EntitySet="SavedJobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SavedJobs_Job" Association="JobFinderDBModel.FK_SavedJobs_Job">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="SavedJob" EntitySet="SavedJobs" />
+          </AssociationSet>
+          <EntitySet Name="Admins" EntityType="JobFinderDBModel.Admin" />
+          <EntitySet Name="ResumeAnalysis" EntityType="JobFinderDBModel.ResumeAnalysi" />
+          <EntitySet Name="ResumeEducations" EntityType="JobFinderDBModel.ResumeEducation" />
+          <EntitySet Name="ResumeExperiences" EntityType="JobFinderDBModel.ResumeExperience" />
+          <EntitySet Name="ResumeProjects" EntityType="JobFinderDBModel.ResumeProject" />
+          <EntitySet Name="ResumeSkills" EntityType="JobFinderDBModel.ResumeSkill" />
+          <EntitySet Name="Resumes" EntityType="JobFinderDBModel.Resume" />
+          <AssociationSet Name="FK__ResumeEdu__Resum__49C3F6B7" Association="JobFinderDBModel.FK__ResumeEdu__Resum__49C3F6B7">
+            <End Role="Resume" EntitySet="Resumes" />
+            <End Role="ResumeEducation" EntitySet="ResumeEducations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ResumeExp__Resum__534D60F1" Association="JobFinderDBModel.FK__ResumeExp__Resum__534D60F1">
+            <End Role="Resume" EntitySet="Resumes" />
+            <End Role="ResumeExperience" EntitySet="ResumeExperiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ResumePro__Resum__4E88ABD4" Association="JobFinderDBModel.FK__ResumePro__Resum__4E88ABD4">
+            <End Role="Resume" EntitySet="Resumes" />
+            <End Role="ResumeProject" EntitySet="ResumeProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ResumeSki__Resum__44FF419A" Association="JobFinderDBModel.FK__ResumeSki__Resum__44FF419A">
+            <End Role="Resume" EntitySet="Resumes" />
+            <End Role="ResumeSkill" EntitySet="ResumeSkills" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Candidate">
+          <Key>
+            <PropertyRef Name="CandidateId" />
+          </Key>
+          <Property Name="CandidateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Skills" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Experience" Type="Int32" />
+          <Property Name="ResumePath" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="About" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProfileImagePath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="JobFinderDBModel.FK__Candidate__UserI__0AD2A005" FromRole="Candidate" ToRole="User" />
+          <NavigationProperty Name="JobApplications" Relationship="JobFinderDBModel.FK_JobApplications_Candidates" FromRole="Candidate" ToRole="JobApplication" />
+          <NavigationProperty Name="SavedJobs" Relationship="JobFinderDBModel.FK_SavedJobs_Candidate" FromRole="Candidate" ToRole="SavedJob" />
+        </EntityType>
+        <Association Name="FK__Candidate__UserI__0AD2A005">
+          <End Type="JobFinderDBModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="JobFinderDBModel.Candidate" Role="Candidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Candidate">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CandidateEducation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Degree" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Institution" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CandidateExperience">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="JobRole" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Years" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="JobId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="JobCategory" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="JobType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SalaryRange" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ExperienceRequired" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Skills" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JobDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Responsibilities" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicationDeadline" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RecruiterId" Type="Int32" />
+          <NavigationProperty Name="Recruiter" Relationship="JobFinderDBModel.FK_Jobs_Recruiters" FromRole="Job" ToRole="Recruiter" />
+          <NavigationProperty Name="JobApplications" Relationship="JobFinderDBModel.FK_JobApplications_Jobs" FromRole="Job" ToRole="JobApplication" />
+          <NavigationProperty Name="SavedJobs" Relationship="JobFinderDBModel.FK_SavedJobs_Job" FromRole="Job" ToRole="SavedJob" />
+        </EntityType>
+        <Association Name="FK_Jobs_Recruiters">
+          <End Type="JobFinderDBModel.Recruiter" Role="Recruiter" Multiplicity="0..1" />
+          <End Type="JobFinderDBModel.Job" Role="Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recruiter">
+              <PropertyRef Name="RecruiterId" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="RecruiterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ConID" />
+          </Key>
+          <Property Name="ConID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Subject" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="JobApplication">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="ApplicationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="CandidateId" Type="Int32" Nullable="false" />
+          <Property Name="AppliedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Candidate" Relationship="JobFinderDBModel.FK_JobApplications_Candidates" FromRole="JobApplication" ToRole="Candidate" />
+          <NavigationProperty Name="Job" Relationship="JobFinderDBModel.FK_JobApplications_Jobs" FromRole="JobApplication" ToRole="Job" />
+        </EntityType>
+        <Association Name="FK_JobApplications_Candidates">
+          <End Type="JobFinderDBModel.Candidate" Role="Candidate" Multiplicity="1" />
+          <End Type="JobFinderDBModel.JobApplication" Role="JobApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidate">
+              <PropertyRef Name="CandidateId" />
+            </Principal>
+            <Dependent Role="JobApplication">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobApplications_Jobs">
+          <End Type="JobFinderDBModel.Job" Role="Job" Multiplicity="1" />
+          <End Type="JobFinderDBModel.JobApplication" Role="JobApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="JobApplication">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SavedJob">
+          <Key>
+            <PropertyRef Name="SavedJobId" />
+          </Key>
+          <Property Name="SavedJobId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="CandidateId" Type="Int32" Nullable="false" />
+          <Property Name="SavedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Candidate" Relationship="JobFinderDBModel.FK_SavedJobs_Candidate" FromRole="SavedJob" ToRole="Candidate" />
+          <NavigationProperty Name="Job" Relationship="JobFinderDBModel.FK_SavedJobs_Job" FromRole="SavedJob" ToRole="Job" />
+        </EntityType>
+        <Association Name="FK_SavedJobs_Candidate">
+          <End Type="JobFinderDBModel.Candidate" Role="Candidate" Multiplicity="1" />
+          <End Type="JobFinderDBModel.SavedJob" Role="SavedJob" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidate">
+              <PropertyRef Name="CandidateId" />
+            </Principal>
+            <Dependent Role="SavedJob">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SavedJobs_Job">
+          <End Type="JobFinderDBModel.Job" Role="Job" Multiplicity="1" />
+          <End Type="JobFinderDBModel.SavedJob" Role="SavedJob" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="SavedJob">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ResumeAnalysi">
+          <Key>
+            <PropertyRef Name="AnalysisId" />
+          </Key>
+          <Property Name="AnalysisId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Score" Type="Int32" />
+          <Property Name="MissingKeywords" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MatchedSkills" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Suggestions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ResumeEducation">
+          <Key>
+            <PropertyRef Name="EducationId" />
+          </Key>
+          <Property Name="EducationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResumeId" Type="Int32" />
+          <Property Name="Degree" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Institution" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Score" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Resume" Relationship="JobFinderDBModel.FK__ResumeEdu__Resum__49C3F6B7" FromRole="ResumeEducation" ToRole="Resume" />
+        </EntityType>
+        <EntityType Name="ResumeExperience">
+          <Key>
+            <PropertyRef Name="ExperienceId" />
+          </Key>
+          <Property Name="ExperienceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResumeId" Type="Int32" />
+          <Property Name="JobTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="IsCurrent" Type="Boolean" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Resume" Relationship="JobFinderDBModel.FK__ResumeExp__Resum__534D60F1" FromRole="ResumeExperience" ToRole="Resume" />
+        </EntityType>
+        <EntityType Name="ResumeProject">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+          </Key>
+          <Property Name="ProjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResumeId" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Technologies" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Resume" Relationship="JobFinderDBModel.FK__ResumePro__Resum__4E88ABD4" FromRole="ResumeProject" ToRole="Resume" />
+        </EntityType>
+        <EntityType Name="ResumeSkill">
+          <Key>
+            <PropertyRef Name="SkillId" />
+          </Key>
+          <Property Name="SkillId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResumeId" Type="Int32" />
+          <Property Name="SkillName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Resume" Relationship="JobFinderDBModel.FK__ResumeSki__Resum__44FF419A" FromRole="ResumeSkill" ToRole="Resume" />
+        </EntityType>
+        <EntityType Name="Resume">
+          <Key>
+            <PropertyRef Name="ResumeId" />
+          </Key>
+          <Property Name="ResumeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Skills" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Experience" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Education" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="ResumeEducations" Relationship="JobFinderDBModel.FK__ResumeEdu__Resum__49C3F6B7" FromRole="Resume" ToRole="ResumeEducation" />
+          <NavigationProperty Name="ResumeExperiences" Relationship="JobFinderDBModel.FK__ResumeExp__Resum__534D60F1" FromRole="Resume" ToRole="ResumeExperience" />
+          <NavigationProperty Name="ResumeProjects" Relationship="JobFinderDBModel.FK__ResumePro__Resum__4E88ABD4" FromRole="Resume" ToRole="ResumeProject" />
+          <NavigationProperty Name="ResumeSkills" Relationship="JobFinderDBModel.FK__ResumeSki__Resum__44FF419A" FromRole="Resume" ToRole="ResumeSkill" />
+        </EntityType>
+        <Association Name="FK__ResumeEdu__Resum__49C3F6B7">
+          <End Type="JobFinderDBModel.Resume" Role="Resume" Multiplicity="0..1" />
+          <End Type="JobFinderDBModel.ResumeEducation" Role="ResumeEducation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="ResumeId" />
+            </Principal>
+            <Dependent Role="ResumeEducation">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ResumeExp__Resum__534D60F1">
+          <End Type="JobFinderDBModel.Resume" Role="Resume" Multiplicity="0..1" />
+          <End Type="JobFinderDBModel.ResumeExperience" Role="ResumeExperience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="ResumeId" />
+            </Principal>
+            <Dependent Role="ResumeExperience">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ResumePro__Resum__4E88ABD4">
+          <End Type="JobFinderDBModel.Resume" Role="Resume" Multiplicity="0..1" />
+          <End Type="JobFinderDBModel.ResumeProject" Role="ResumeProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="ResumeId" />
+            </Principal>
+            <Dependent Role="ResumeProject">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ResumeSki__Resum__44FF419A">
+          <End Type="JobFinderDBModel.Resume" Role="Resume" Multiplicity="0..1" />
+          <End Type="JobFinderDBModel.ResumeSkill" Role="ResumeSkill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="ResumeId" />
+            </Principal>
+            <Dependent Role="ResumeSkill">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="JobFinderDBModelStoreContainer" CdmEntityContainer="JobFinderDBEntities">
+          <EntitySetMapping Name="Recruiters">
+            <EntityTypeMapping TypeName="JobFinderDBModel.Recruiter">
+              <MappingFragment StoreEntitySet="Recruiters">
+                <ScalarProperty Name="RecruiterId" ColumnName="RecruiterId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyWebsite" ColumnName="CompanyWebsite" />
+                <ScalarProperty Name="CompanyLocation" ColumnName="CompanyLocation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="JobFinderDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Candidates">
+            <EntityTypeMapping TypeName="JobFinderDBModel.Candidate">
+              <MappingFragment StoreEntitySet="Candidates">
+                <ScalarProperty Name="ProfileImagePath" ColumnName="ProfileImagePath" />
+                <ScalarProperty Name="About" ColumnName="About" />
+                <ScalarProperty Name="ResumePath" ColumnName="ResumePath" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="Skills" ColumnName="Skills" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CandidateEducations">
+            <EntityTypeMapping TypeName="JobFinderDBModel.CandidateEducation">
+              <MappingFragment StoreEntitySet="CandidateEducations">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Institution" ColumnName="Institution" />
+                <ScalarProperty Name="Degree" ColumnName="Degree" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CandidateExperiences">
+            <EntityTypeMapping TypeName="JobFinderDBModel.CandidateExperience">
+              <MappingFragment StoreEntitySet="CandidateExperiences">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Years" ColumnName="Years" />
+                <ScalarProperty Name="JobRole" ColumnName="JobRole" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jobs">
+            <EntityTypeMapping TypeName="JobFinderDBModel.Job">
+              <MappingFragment StoreEntitySet="Jobs">
+                <ScalarProperty Name="RecruiterId" ColumnName="RecruiterId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ApplicationDeadline" ColumnName="ApplicationDeadline" />
+                <ScalarProperty Name="Responsibilities" ColumnName="Responsibilities" />
+                <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
+                <ScalarProperty Name="Skills" ColumnName="Skills" />
+                <ScalarProperty Name="ExperienceRequired" ColumnName="ExperienceRequired" />
+                <ScalarProperty Name="SalaryRange" ColumnName="SalaryRange" />
+                <ScalarProperty Name="JobType" ColumnName="JobType" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="JobCategory" ColumnName="JobCategory" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="JobFinderDBModel.Contact">
+              <MappingFragment StoreEntitySet="Contact">
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ConID" ColumnName="ConID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_InsertContact" FunctionName="JobFinderDBModel.Store.sp_InsertContact" />
+          <EntitySetMapping Name="JobApplications">
+            <EntityTypeMapping TypeName="JobFinderDBModel.JobApplication">
+              <MappingFragment StoreEntitySet="JobApplications">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SavedJobs">
+            <EntityTypeMapping TypeName="JobFinderDBModel.SavedJob">
+              <MappingFragment StoreEntitySet="SavedJobs">
+                <ScalarProperty Name="SavedDate" ColumnName="SavedDate" />
+                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="SavedJobId" ColumnName="SavedJobId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="JobFinderDBModel.Admin">
+              <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResumeAnalysis">
+            <EntityTypeMapping TypeName="JobFinderDBModel.ResumeAnalysi">
+              <MappingFragment StoreEntitySet="ResumeAnalysis">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Suggestions" ColumnName="Suggestions" />
+                <ScalarProperty Name="MatchedSkills" ColumnName="MatchedSkills" />
+                <ScalarProperty Name="MissingKeywords" ColumnName="MissingKeywords" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AnalysisId" ColumnName="AnalysisId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResumeEducations">
+            <EntityTypeMapping TypeName="JobFinderDBModel.ResumeEducation">
+              <MappingFragment StoreEntitySet="ResumeEducation">
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Institution" ColumnName="Institution" />
+                <ScalarProperty Name="Degree" ColumnName="Degree" />
+                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="EducationId" ColumnName="EducationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResumeExperiences">
+            <EntityTypeMapping TypeName="JobFinderDBModel.ResumeExperience">
+              <MappingFragment StoreEntitySet="ResumeExperience">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsCurrent" ColumnName="IsCurrent" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="ExperienceId" ColumnName="ExperienceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResumeProjects">
+            <EntityTypeMapping TypeName="JobFinderDBModel.ResumeProject">
+              <MappingFragment StoreEntitySet="ResumeProjects">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Technologies" ColumnName="Technologies" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResumeSkills">
+            <EntityTypeMapping TypeName="JobFinderDBModel.ResumeSkill">
+              <MappingFragment StoreEntitySet="ResumeSkills">
+                <ScalarProperty Name="SkillName" ColumnName="SkillName" />
+                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resumes">
+            <EntityTypeMapping TypeName="JobFinderDBModel.Resume">
+              <MappingFragment StoreEntitySet="Resumes">
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Education" ColumnName="Education" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="Skills" ColumnName="Skills" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

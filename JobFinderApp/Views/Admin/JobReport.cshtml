@@ -1,0 +1,49 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📊 Job Report</h2>
+    </div>
+
+ 
+
+    <div class="card-box">
+        <table id="jobTable" class="display">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Company</th>
+                    <th>Location</th>
+                    <th>Type</th>
+                    <th>Salary</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script>
+var table = $('#jobTable').DataTable({
+    ajax: {
+        url: '@Url.Action("GetJobs","Admin")',
+        data: d => d.type = $('#type').val()
+    },
+    columns: [
+        { data: 'Title' },
+        { data: 'Company' },
+        { data: 'Location' },
+        { data: 'Type' },
+        { data: 'Salary' }
+    ]
+     ,"pageLength": 5,
+    "lengthMenu": [5, 10, 20],
+    "dom": 'Bfrtip',
+    "buttons": ['copy', 'excel', 'csv', 'pdf']
+});
+
+$('#btnFilter').click(() => table.ajax.reload());
+</script>

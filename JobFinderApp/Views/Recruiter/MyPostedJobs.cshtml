@@ -1,0 +1,77 @@
+﻿
+@using JobFinderApp.Helper;
+@model List<JobFinderApp.Models.Job>
+
+@{
+    ViewBag.Title = "My Posted Jobs";
+    Layout = "~/Views/Shared/_RecruiterLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">My Posted Jobs</h2>
+
+    <div class="row">
+        @if (Model.Count > 0)
+        {
+            foreach (var job in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow border-0 rounded-4 p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h4 class="fw-bold mb-1">@job.JobTitle</h4>
+                                <p class="text-muted mb-0">@job.Recruiter.CompanyName</p>
+                            </div>
+
+                            <span class="badge bg-primary px-3 py-2">
+                                @job.JobType
+                            </span>
+                        </div>
+
+                        <hr />
+
+                        <p class="mb-2">
+                            <strong><i class="fa fa-map-marker-alt me-2 text-danger"></i>Location:</strong>
+                            @job.Location
+                        </p>
+
+                        <p class="mb-2">
+                            <strong><i class="fa fa-briefcase me-2 text-primary"></i>Experience:</strong>
+                            @job.ExperienceRequired
+                        </p>
+
+                        <p class="mb-2">
+                            <strong><i class="fa fa-money-bill-wave me-2 text-success"></i>Salary:</strong>
+                            @job.SalaryRange
+                        </p>
+
+                        <p class="mb-3">
+                            <strong><i class="fa fa-calendar-alt me-2 text-warning"></i>Deadline:</strong>
+                            @DateHelper.GetDeadlineText(job.ApplicationDeadline)
+                        </p>
+
+                        <div class="d-flex gap-2 mt-auto">
+                            <a href="@Url.Action("Applicants", "Recruiter", new { jobId = job.JobId })"
+                               class="btn btn-primary w-100">
+                                <i class="fa fa-users me-2"></i>View Applicants
+                            </a>
+
+                            <a href="@Url.Action("EditJob", "Recruiter", new { id = job.JobId })"
+                               class="btn btn-outline-secondary">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="alert alert-info text-center shadow-sm rounded-3">
+                    You have not posted any jobs yet.
+                </div>
+            </div>
+        }
+    </div>
+

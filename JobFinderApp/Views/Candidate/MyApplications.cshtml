@@ -1,0 +1,59 @@
+﻿@model List<JobFinderApp.ViewModels.MyApplicationVm>
+
+@{
+    ViewBag.Title = "My Applications";
+    Layout = "~/Views/Shared/_CandidateLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">My Applications</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            You have not applied for any jobs yet.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Company</th>
+                        <th>Location</th>
+                        <th>Applied Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.JobTitle</td>
+                            <td>@item.CompanyName</td>
+                            <td>@item.Location</td>
+                            <td>@item.AppliedDate.ToString("dd MMM yyyy")</td>
+                            <td>
+                                @if (item.Status == "Pending")
+                                {
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                }
+                                else if (item.Status == "Shortlisted")
+                                {
+                                    <span class="badge bg-success">Shortlisted</span>
+                                }
+                                else if (item.Status == "Rejected")
+                                {
+                                    <span class="badge bg-danger">Rejected</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+

@@ -1,0 +1,139 @@
+﻿@model JobFinderApp.ViewModels.RecruiterDashboardVm
+
+@{
+    ViewBag.Title = "Recruiter Dashboard";
+    Layout = "~/Views/Shared/_RecruiterLayout.cshtml";
+}
+
+<div class="col-md-12 p-4">
+
+    <!-- Welcome -->
+    <h3>Welcome Back, Recruiter 👋</h3>
+    <p class="text-muted">Manage your hiring process efficiently</p>
+
+    <!-- Metrics -->
+    <div class="row g-3 mt-3">
+
+        <div class="col-md-3">
+            <div class="card p-3 text-center shadow-sm">
+                <h6>Active Jobs</h6>
+                <h3>@Model.ActiveJobs</h3>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card p-3 text-center shadow-sm">
+                <h6>Applications</h6>
+                <h3>@Model.TotalApplications</h3>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card p-3 text-center shadow-sm">
+                <h6>Shortlisted</h6>
+                <h3>@Model.Shortlisted</h3>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card p-3 text-center shadow-sm">
+                <h6>Interviews</h6>
+                <h3>@Model.Interviews</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Job Listings -->
+    <div class="card mt-4 p-3 shadow-sm">
+        <h5 class="mb-3">Job Listings</h5>
+
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Job Title</th>
+                    <th>Location</th>
+                    <th>Type</th>
+                    <th>Applicants</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.Jobs != null && Model.Jobs.Any())
+                {
+                    foreach (var job in Model.Jobs)
+                    {
+                        <tr>
+                            <td>@job.Title</td>
+                            <td>@job.Location</td>
+                            <td>@job.JobType</td>
+                            <td>@job.ApplicantCount</td>
+                            <td>
+                                @if (job.Status == "Active")
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@job.Status</span>
+                                }
+                            </td>
+                            <td>
+                               
+                                <a href="/Recruiter/EditJob/@job.JobId" class="btn btn-sm btn-warning">
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center">No jobs found</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Recent Applications -->
+    <div class="card mt-4 p-3 shadow-sm">
+        <h5 class="mb-3">Recent Applications</h5>
+
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Candidate</th>
+                    <th>Role</th>
+                    <th>Experience</th>
+                   
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.Applications != null && Model.Applications.Any())
+                {
+                    foreach (var app in Model.Applications)
+                    {
+                        <tr>
+                            <td>@app.CandidateName</td>
+                            <td>@app.Role</td>
+                            <td>@app.Experience Years</td>
+                           
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="text-center">No recent applications</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

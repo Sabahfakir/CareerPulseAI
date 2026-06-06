@@ -1,0 +1,59 @@
+﻿@model JobFinderApp.Models.Job
+@{
+    ViewBag.Title = "JobDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fliud py-5 bg-dark page-header mb-5">
+    <div class="container my-5 pt-5 pb-4">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Job Detail</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb text-uppercase">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Jobs</a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">Job Detail</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Header End -->
+
+<div class="container mt-5">
+    <div class="card p-4 shadow">
+        <h2>@Model.JobTitle</h2>
+
+        <p><strong>Location:</strong> @Model.Location</p>
+        <p><strong>Type:</strong> @Model.JobType</p>
+        <p><strong>Experience:</strong> @Model.ExperienceRequired</p>
+        <p><strong>Salary:</strong> @Model.SalaryRange</p>
+
+        <hr />
+
+        <h5>Description</h5>
+        <p>@Model.JobDescription</p>
+
+        <h5>Responsibilities</h5>
+        <p>@Model.Responsibilities</p>
+
+        <h5>Skills</h5>
+        <p>@Model.Skills</p>
+
+        <a href="@Url.Action("ApplyJob", "Home", new { id = Model.JobId })" class="btn btn-success">
+            Apply Now
+        </a>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["Error"]
+            </div>
+        }
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Success"]
+            </div>
+        }
+    </div>
+</div>
+

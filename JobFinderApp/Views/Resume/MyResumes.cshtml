@@ -1,0 +1,36 @@
+﻿@model List<JobFinderApp.Models.Resume>
+@{
+    ViewBag.Title = "MyResumes";
+    Layout = "~/Views/Shared/_CandidateLayout.cshtml";
+}
+
+
+<div class="container mt-5">
+    <h3 class="mb-4">📄 My Resumes</h3>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FullName</td>
+                    <td>@item.Email</td>
+                    <td>@item.CreatedDate</td>
+                    <td>
+                        <a href="@Url.Action("EditResume", "Resume", new { id = item.ResumeId })"
+                           class="btn btn-sm btn-primary">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

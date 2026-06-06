@@ -1,0 +1,546 @@
+﻿@model JobFinderApp.ViewModels.ResumeBuilderModel
+
+@{
+    ViewBag.Title = "Edit Resume";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #resumePreview {
+        width: 100%;
+        max-width: 800px;
+        margin: auto;
+        padding: 30px;
+        background: #fff;
+        font-family: 'Segoe UI';
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+
+    .header {
+        text-align: center;
+        border-bottom: 2px solid #000;
+        margin-bottom: 10px;
+    }
+
+    .section h4 {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+        color: #2c3e50;
+    }
+
+    #p_skills li {
+        margin-bottom: 5px;
+    }
+</style>
+
+<div class="container-fluid mt-4">
+    <div class="row">
+
+        <!-- FORM -->
+        <div class="col-md-6">
+            <div class="card p-3 shadow">
+
+                <h4>Edit Resume</h4>
+                <ul class="nav nav-tabs mt-3" id="resumeTabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#tab1">Personal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tab2">Summary & Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tab3">Experience</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tab4">Education</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tab5">Projects</a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-3">
+
+                    <div class="tab-pane fade show active" id="tab1">
+
+                        <input type="hidden" id="ResumeId" value="@Model.ResumeId" />
+
+                        <!-- PERSONAL -->
+                        <input id="name" class="form-control mb-2" value="@Model.FullName" placeholder="Name" />
+                        <input id="email" class="form-control mb-2" value="@Model.Email" />
+                        <input id="phone" class="form-control mb-2" value="@Model.Phone" />
+                        <input type="date" id="dob" class="form-control mb-2" value="@(Model.DOB?.ToString("yyyy-MM-dd"))" />
+
+                        <input id="city" class="form-control mb-2" value="@Model.City" />
+                        <input id="state" class="form-control mb-2" value="@Model.State" />
+                        <input id="country" class="form-control mb-2" value="@Model.Country" />
+                        <input id="zip" class="form-control mb-2" value="@Model.ZipCode" />
+                    </div>
+                    <div class="tab-pane fade" id="tab2">
+
+                        <!-- SUMMARY -->
+<textarea id="summary" class="form-control mb-2">@Model.Summary</textarea>
+
+                        <!-- SKILLS -->
+<textarea id="skills" class="form-control mb-2">
+@(Model.Skills != null ? string.Join(",", Model.Skills) : "")
+</textarea>
+
+                        <hr />
+                    </div>
+                    <div class="tab-pane fade" id="tab3">
+                        <!-- EXPERIENCE -->
+                        <h5>Experience</h5>
+                        <select id="userType" class="form-control mb-2">
+                            <option value="">Select Type</option>
+                            <option value="fresher">Fresher</option>
+                            <option value="experienced">Experienced</option>
+                        </select>
+
+                        <input id="jobTitle" class="form-control mb-2" placeholder="Job Title" />
+                        <input id="company" class="form-control mb-2" placeholder="Company Name" />
+                        <input id="expLocation" class="form-control mb-2" placeholder="Location" />
+
+                        <div class="d-flex gap-2 mb-2">
+                            <input type="date" id="startDate" class="form-control" />
+                            <input type="date" id="endDate" class="form-control" />
+                        </div>
+
+                        <label>
+                            <input type="checkbox" id="isCurrent" /> Currently Working Here
+                        </label>
+
+                        <textarea id="expDesc" class="form-control mb-2"
+                                  placeholder="Describe your work (use bullet points)"></textarea>
+                        <button onclick="addExperience()" class="btn btn-secondary mb-2">Add</button>
+
+                        <ul id="experienceList" class="list-group mb-2"></ul>
+
+                        <hr />
+                    </div>
+                    <div class="tab-pane fade" id="tab4">
+                        <!-- EDUCATION -->
+                        <h5>Education</h5>
+                        <input id="eduDegree" class="form-control mb-2" placeholder="Degree" />
+                        <input id="eduInst" class="form-control mb-2" placeholder="Institution" />
+                        <input id="secondaryYear" class="form-control mb-2" placeholder="Year" />
+                        <input id="secondaryScore" class="form-control mb-2" placeholder="Score" />
+                        <button onclick="addEducation()" class="btn btn-secondary mb-2">Add</button>
+
+                        <ul id="educationList" class="list-group mb-2"></ul>
+
+                        <hr />
+                    </div>
+                    <div class="tab-pane fade" id="tab5">
+                        <!-- PROJECT -->
+                        <h5>Projects</h5>
+                        <input id="projTitle" class="form-control mb-2" placeholder="Title" />
+                        <input id="projectTech" class="form-control mb-2" placeholder="Technologies" />
+                        <textarea id="projectDesc" class="form-control mb-2" placeholder="Description"></textarea>
+
+                        <button onclick="addProject()" class="btn btn-secondary mb-2">Add</button>
+
+                        <ul id="projectList" class="list-group mb-2"></ul>
+
+                        <hr />
+
+                        <button onclick="updateResume()" class="btn btn-success w-100 mb-2">Update</button>
+
+                        <a href="/Resume/DeleteResume/@Model.ResumeId"
+                           class="btn btn-danger w-100 mb-2"
+                           onclick="return confirm('Delete resume?')">Delete</a>
+
+                        <button onclick="downloadPDF()" class="btn btn-primary w-100">
+                            Download PDF
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PREVIEW -->
+        <!-- PREVIEW -->
+        <div class="col-md-6">
+            <div id="resumePreview">
+
+                <!-- HEADER -->
+                <div class="text-center mb-4 border-bottom pb-3">
+                    <h2 id="p_name" class="mb-1"></h2>
+
+                    <p id="p_contact" class="mb-1 text-muted"></p>
+
+                    <p id="p_address" class="text-muted"></p>
+                </div>
+
+                <!-- SUMMARY -->
+                <div class="mb-4">
+                    <h4 class="border-bottom pb-2">Summary</h4>
+                    <p id="p_summary"></p>
+                </div>
+
+                <!-- SKILLS -->
+                <div class="mb-4">
+                    <h4 class="border-bottom pb-2">Skills</h4>
+                    <ul id="p_skills" style="columns:2;"></ul>
+                </div>
+
+                <!-- EXPERIENCE -->
+                <div class="mb-4">
+                    <h4 class="border-bottom pb-2">Experience</h4>
+                    <div id="p_exp"></div>
+                </div>
+
+                <!-- EDUCATION -->
+                <div class="mb-4">
+                    <h4 class="border-bottom pb-2">Education</h4>
+                    <div id="p_edu"></div>
+                </div>
+
+                <!-- PROJECTS -->
+                <div class="mb-4">
+                    <h4 class="border-bottom pb-2">Projects</h4>
+                    <div id="p_proj"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+
+let experiences = @Html.Raw(Json.Encode(Model.Experiences ?? new List<JobFinderApp.ViewModels.ExperienceModel>()));
+let education = @Html.Raw(Json.Encode(Model.EducationList ?? new List<JobFinderApp.ViewModels.EducationModel>()));
+let projects = @Html.Raw(Json.Encode(Model.Projects ?? new List<JobFinderApp.ViewModels.ProjectModel>()));
+
+    function loadPreview() {
+
+        // =========================
+        // BASIC INFO
+        // =========================
+
+        $("#p_name").text($("#name").val());
+
+        $("#p_contact").text(
+            $("#email").val() + " | " +
+            $("#phone").val()
+        );
+
+        $("#p_address").text(
+            $("#city").val() + ", " +
+            $("#state").val() + ", " +
+            $("#country").val() + " - " +
+            $("#zip").val()
+        );
+
+        $("#p_summary").text($("#summary").val());
+
+
+        // =========================
+        // SKILLS
+        // =========================
+
+        $("#p_skills").html("");
+
+        $("#skills").val().split(",").forEach(skill => {
+
+            if (skill.trim()) {
+
+                $("#p_skills").append(`
+                <li>${skill.trim()}</li>
+            `);
+            }
+        });
+
+
+        // =========================
+        // EXPERIENCE
+        // =========================
+
+        $("#p_exp").html("");
+
+        experiences.forEach(exp => {
+
+            $("#p_exp").append(`
+
+            <div class="mb-3">
+
+                <h6 class="fw-bold mb-1">
+                    ${exp.JobTitle || ""}
+                </h6>
+
+                <div>
+                    ${exp.CompanyName || ""}
+                </div>
+
+                ${exp.Location
+                    ? `<div>${exp.Location}</div>`
+                    : ""
+                }
+
+                ${exp.StartDate || exp.EndDate
+                    ?
+                    `<small class="text-muted">
+                        ${exp.StartDate || ""}
+                        ${exp.EndDate ? " - " + exp.EndDate : ""}
+                    </small>`
+                    : ""
+                }
+
+                ${exp.Description
+                    ? `<p class="mt-2 mb-0">${exp.Description}</p>`
+                    : ""
+                }
+
+            </div>
+
+        `);
+        });
+
+
+        // =========================
+        // EDUCATION
+        // =========================
+
+        $("#p_edu").html("");
+
+        education.forEach(edu => {
+
+            $("#p_edu").append(`
+
+            <div class="mb-3">
+
+                <h6 class="fw-bold mb-1">
+                    ${edu.Degree || ""}
+                </h6>
+
+                <div>
+                    ${edu.Institution || ""}
+                </div>
+
+                ${edu.Year || edu.Score
+                    ?
+                    `<small class="text-muted">
+                        ${edu.Year || ""}
+                        ${edu.Score ? " | Score: " + edu.Score : ""}
+                    </small>`
+                    : ""
+                }
+
+            </div>
+
+        `);
+        });
+
+
+        // =========================
+        // PROJECTS
+        // =========================
+
+        $("#p_proj").html("");
+
+        projects.forEach(project => {
+
+            $("#p_proj").append(`
+
+            <div class="mb-3">
+
+                <h6 class="fw-bold mb-1">
+                    ${project.Title || ""}
+                </h6>
+
+                ${project.Technologies
+                    ?
+                    `<small class="text-muted">
+                        Technologies: ${project.Technologies}
+                    </small>`
+                    : ""
+                }
+
+                ${project.Description
+                    ?
+                    `<p class="mt-2 mb-0">
+                        ${project.Description}
+                    </p>`
+                    : ""
+                }
+
+            </div>
+
+        `);
+        });
+
+    }
+
+// INIT LOAD
+$(document).ready(function(){
+    renderLists();
+    loadPreview();
+});
+
+// LIVE UPDATE
+$("input, textarea").on("input", loadPreview);
+
+// ---------- EXPERIENCE ----------
+    // ---------- EXPERIENCE ----------
+    function addExperience() {
+
+        let obj = {
+
+            JobTitle: $("#jobTitle").val(),
+            CompanyName: $("#company").val(),
+            Location: $("#expLocation").val(),
+            StartDate: $("#startDate").val(),
+            EndDate: $("#endDate").val(),
+            IsCurrent: $("#isCurrent").is(":checked"),
+            Description: $("#expDesc").val()
+        };
+
+        experiences.push(obj);
+
+        renderLists();
+    }
+
+function removeExp(i){
+    experiences.splice(i,1);
+    renderLists();
+}
+
+// ---------- EDUCATION ----------
+    // ---------- EDUCATION ----------
+    function addEducation() {
+
+        let obj = {
+
+            Degree: $("#eduDegree").val(),
+            Institution: $("#eduInst").val(),
+            Year: $("#secondaryYear").val(),
+            Score: $("#secondaryScore").val()
+        };
+
+        education.push(obj);
+
+        renderLists();
+    }
+function removeEdu(i){
+    education.splice(i,1);
+    renderLists();
+}
+
+// ---------- PROJECT ----------
+    // ---------- PROJECT ----------
+    function addProject() {
+
+        let obj = {
+
+            Title: $("#projTitle").val(),
+            Technologies: $("#projectTech").val(),
+            Description: $("#projectDesc").val()
+        };
+
+        projects.push(obj);
+
+        renderLists();
+    }
+function removeProj(i){
+    projects.splice(i,1);
+    renderLists();
+}
+
+// ---------- RENDER LIST ----------
+function renderLists(){
+
+    $("#experienceList").html("");
+    experiences.forEach((e,i)=>{
+        $("#experienceList").append(
+            `<li class="list-group-item">
+                ${e.JobTitle}
+                <button onclick="removeExp(${i})" class="btn btn-sm btn-danger float-end">X</button>
+            </li>`
+        );
+    });
+
+    $("#educationList").html("");
+    education.forEach((e,i)=>{
+        $("#educationList").append(
+            `<li class="list-group-item">
+                ${e.Degree}
+                <button onclick="removeEdu(${i})" class="btn btn-sm btn-danger float-end">X</button>
+            </li>`
+        );
+    });
+
+    $("#projectList").html("");
+    projects.forEach((p,i)=>{
+        $("#projectList").append(
+            `<li class="list-group-item">
+                ${p.Title}
+                <button onclick="removeProj(${i})" class="btn btn-sm btn-danger float-end">X</button>
+            </li>`
+        );
+    });
+
+    loadPreview();
+}
+
+// ---------- UPDATE ----------
+function updateResume(){
+
+    $.ajax({
+        url:'/Resume/UpdateResume',
+        type:'POST',
+        contentType:'application/json',
+        data: JSON.stringify({
+            ResumeId: $("#ResumeId").val(),
+            FullName: $("#name").val(),
+            Email: $("#email").val(),
+            Phone: $("#phone").val(),
+            Summary: $("#summary").val(),
+            Skills: $("#skills").val().split(","),
+            City: $("#city").val(),
+            State: $("#state").val(),
+            Country: $("#country").val(),
+            ZipCode: $("#zip").val(),
+            DOB: $("#dob").val(),
+            EducationList: education,
+            Projects: projects,
+            Experiences: experiences
+        }),
+        success:function(){
+            alert("Updated successfully");
+        }
+    });
+}
+
+// ---------- PDF ----------
+    async function downloadPDF() {
+
+        const element = document.getElementById("resumePreview");
+       // renderExperience();
+        // FORCE re-render
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        html2pdf().set({
+            margin: 0,
+            filename: 'Resume.pdf',
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: {
+                scale: 2,
+                scrollY: 0,
+                useCORS: true
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            }
+        }).from(element).save();
+    }
+
+</script>

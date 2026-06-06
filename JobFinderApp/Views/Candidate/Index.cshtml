@@ -1,0 +1,178 @@
+﻿
+@model JobFinderApp.ViewModels.CandidateDashboardVm
+
+@{
+    Layout = "~/Views/Shared/_CandidateLayout.cshtml";
+    ViewBag.Title = "Candidate Dashboard";
+}
+
+<div class="col-md-12 p-4">
+
+    <h3>Welcome, @Model.UserName 👋</h3>
+    <p class="text-muted">Here’s what’s happening with your job search today.</p>
+
+    <!-- Stats -->
+    <div class="row mt-4">
+
+        <div class="col-md-4">
+            <div class="card card-box p-3">
+                <h5>Total Applications</h5>
+                <h3>@Model.TotalApplications</h3>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card card-box p-3">
+                <h5>Saved Jobs</h5>
+                <h3>@Model.SavedJobs</h3>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card card-box p-3">
+                <h5>Shortlisted</h5>
+                <h3>@Model.Shortlisted</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Recent Applications -->
+    <div class="mt-5">
+        <h4>Recent Applications</h4>
+
+        <table class="table table-bordered mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.RecentApplications)
+                {
+                    <tr>
+                        <td>@item.JobTitle</td>
+                        <td>@item.Company</td>
+                        <td>
+                            @if (item.Status == "Pending")
+                            {
+                                <span class="badge bg-warning">Pending</span>
+                            }
+                            else if (item.Status == "Shortlisted")
+                            {
+                                <span class="badge bg-success">Shortlisted</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@item.Status</span>
+                            }
+                        </td>
+                        <td>@item.AppliedDate.ToString("dd MMM yyyy")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Profile -->
+    <div class="mt-5">
+        <h4>Your Profile</h4>
+
+        <div class="card card-box p-3 d-flex flex-row align-items-center">
+            <img src="https://via.placeholder.com/100" class="rounded-circle me-3" />
+
+            <div>
+                <h5>@Model.UserName</h5>
+                <p>Email: @Model.Email</p>
+                <p>Skills: @Model.Skills</p>
+
+                <a href="/Candidate/UserProfile" class="btn btn-primary btn-sm">
+                    View Full Profile
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Main Content -->
+<!--<div class="col-md-12 p-4">-->
+<!-- Welcome -->
+<!--<h3>Welcome, @Session["UserName"] 👋</h3>
+<p class="text-muted">Here’s what’s happening with your job search today.</p>-->
+<!-- Stats -->
+<!--<div class="row mt-4">
+
+    <div class="col-md-4">
+        <div class="card card-box p-3">
+            <h5>Total Applications</h5>
+            <h3>12</h3>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card card-box p-3">
+            <h5>Saved Jobs</h5>
+            <h3>5</h3>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card card-box p-3">
+            <h5>Shortlisted</h5>
+            <h3>3</h3>
+        </div>
+    </div>
+
+</div>-->
+<!-- Recent Applications -->
+<!--<div class="mt-5">
+    <h4>Recent Applications</h4>
+
+    <table class="table table-bordered mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Software Developer</td>
+                <td>ABC Pvt Ltd</td>
+                <td><span class="badge bg-warning">Pending</span></td>
+                <td>10 Feb 2026</td>
+            </tr>
+            <tr>
+                <td>Web Designer</td>
+                <td>XYZ Ltd</td>
+                <td><span class="badge bg-success">Shortlisted</span></td>
+                <td>08 Feb 2026</td>
+            </tr>
+        </tbody>
+    </table>
+</div>-->
+<!-- Profile Card -->
+<!--<div class="mt-5">
+        <h4>Your Profile</h4>
+
+        <div class="card card-box p-3 d-flex flex-row align-items-center">
+            <img src="https://via.placeholder.com/100" class="rounded-circle me-3" />
+
+            <div>
+                <h5>@Session["UserName"]</h5>
+                <p>Email: user@email.com</p>
+                <p>Skills: ASP.NET, SQL, JavaScript</p>
+
+                <a href="#" class="btn btn-primary btn-sm">View Full Profile</a>
+            </div>
+        </div>
+    </div>
+
+</div>-->

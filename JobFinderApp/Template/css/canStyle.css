@@ -1,0 +1,100 @@
+﻿
+body {
+    background-color: #f5f7fb;
+    overflow-x: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+    height: 100vh;
+    background: linear-gradient(180deg, #00B074, #007bff);
+    color: white;
+    position: fixed;
+    width: 240px;
+    transition: all 0.3s ease;
+}
+
+    .sidebar.collapsed {
+        width: 70px;
+    }
+
+    .sidebar h4 {
+        text-align: center;
+        padding: 15px 0;
+    }
+
+    .sidebar a {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        color: white;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+        .sidebar a i {
+            width: 25px;
+        }
+
+        .sidebar a span {
+            margin-left: 10px;
+            transition: opacity 0.3s;
+        }
+
+    .sidebar.collapsed a span {
+        opacity: 0;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+/* Toggle Button */
+.toggle-btn {
+    position: absolute;
+    top: 15px;
+    right: -15px;
+    background: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 240px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+    .main-content.expanded {
+        margin-left: 70px;
+    }
+
+/* Cards */
+.card-box {
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        left: -240px;
+    }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+    .main-content {
+        margin-left: 0;
+    }
+    h4 {
+        font-size: 10px;
+    }
+}

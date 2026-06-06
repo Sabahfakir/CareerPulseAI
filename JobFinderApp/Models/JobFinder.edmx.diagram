@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cf9c2f5e841647e6bb126c41f2b3b208" Name="Diagram1" ZoomLevel="49">
+        <EntityTypeShape EntityType="JobFinderDBModel.Recruiter" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobFinderDBModel.User" Width="1.5" PointX="0.875" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="JobFinderDBModel.FK__Recruiter__UserI__0F975522" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="JobFinderDBModel.Candidate" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="JobFinderDBModel.FK__Candidate__UserI__0AD2A005" />
+        <EntityTypeShape EntityType="JobFinderDBModel.CandidateEducation" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="JobFinderDBModel.CandidateExperience" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="JobFinderDBModel.Job" Width="1.5" PointX="5.125" PointY="3" />
+        <AssociationConnector Association="JobFinderDBModel.FK_Jobs_Recruiters" />
+        <EntityTypeShape EntityType="JobFinderDBModel.Contact" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="JobFinderDBModel.JobApplication" Width="1.5" PointX="7.375" PointY="3.875" />
+        <AssociationConnector Association="JobFinderDBModel.FK_JobApplications_Candidates" />
+        <AssociationConnector Association="JobFinderDBModel.FK_JobApplications_Jobs" />
+        <EntityTypeShape EntityType="JobFinderDBModel.SavedJob" Width="1.5" PointX="10.375" PointY="4" />
+        <AssociationConnector Association="JobFinderDBModel.FK_SavedJobs_Candidate" />
+        <AssociationConnector Association="JobFinderDBModel.FK_SavedJobs_Job" />
+        <EntityTypeShape EntityType="JobFinderDBModel.Admin" Width="1.5" PointX="8.25" PointY="7" />
+        <EntityTypeShape EntityType="JobFinderDBModel.ResumeAnalysi" Width="1.5" PointX="2.75" PointY="6.625" />
+        <EntityTypeShape EntityType="JobFinderDBModel.ResumeEducation" Width="1.5" PointX="10.5" PointY="1.125" />
+        <EntityTypeShape EntityType="JobFinderDBModel.ResumeExperience" Width="1.5" PointX="15.25" PointY="3.75" />
+        <EntityTypeShape EntityType="JobFinderDBModel.ResumeProject" Width="1.5" PointX="12.25" PointY="5.625" />
+        <EntityTypeShape EntityType="JobFinderDBModel.ResumeSkill" Width="1.5" PointX="15.25" PointY="0.5" />
+        <EntityTypeShape EntityType="JobFinderDBModel.Resume" Width="1.5" PointX="13.125" PointY="0.5" />
+        <AssociationConnector Association="JobFinderDBModel.FK__ResumeEdu__Resum__49C3F6B7" />
+        <AssociationConnector Association="JobFinderDBModel.FK__ResumeExp__Resum__534D60F1" />
+        <AssociationConnector Association="JobFinderDBModel.FK__ResumePro__Resum__4E88ABD4" />
+        <AssociationConnector Association="JobFinderDBModel.FK__ResumeSki__Resum__44FF419A" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,61 @@
+﻿@model List<JobFinderApp.ViewModels.ApplicantVm>
+
+@{  ViewBag.Title = "Applicants";
+    Layout = "~/Views/Shared/_RecruiterLayout.cshtml";
+    }
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Skills</th>
+                <th>Experience</th>
+                <th>Applied Date</th>
+                <th>Status</th>
+                <th>Resume</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CandidateName</td>
+                    <td>@item.Email</td>
+                    <td>@item.Skills</td>
+                    <td>@item.Experience</td>
+                    <td>@item.AppliedDate.ToString("dd MMM yyyy")</td>
+                    <td>
+                        @if (item.Status == "Pending")
+                        {
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        }
+                        else if (item.Status == "Shortlisted")
+                        {
+                            <span class="badge bg-success">Shortlisted</span>
+                        }
+                        else if (item.Status == "Rejected")
+                        {
+                            <span class="badge bg-danger">Rejected</span>
+                        }
+                    </td>
+                    <td>
+                        <a href="@Url.Content(item.ResumePath)" target="_blank" class="btn btn-primary btn-sm">
+                            View Resume
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("UpdateApplicationStatus", "Recruiter", new { applicationId = item.ApplicationId, status = "Shortlisted" })" class="btn btn-success btn-sm">
+                            Shortlist
+                        </a>
+
+                        <a href="@Url.Action("UpdateApplicationStatus", "Recruiter", new { applicationId = item.ApplicationId, status = "Rejected" })" class="btn btn-danger btn-sm">
+                            Reject
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,170 @@
+﻿@model JobFinderApp.ViewModels.RegisterVm
+@{
+    Layout = null;
+    ViewBag.Title = "JobFinder | Register";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Job Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/Template/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="~/Template/stylesheet" href="css/style.css">
+    <link href="~/Template/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link href="~/Template/img/favicon.png" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="~/Template/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="~/Template/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/Template/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="reg">
+        <div class="container mt-5 mb-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+
+                    <div class="card reg-card p-4">
+                        <h3 class="text-center">Create Your Account</h3>
+                        <p class="text-center text-muted">Register as Candidate or Recruiter</p>
+
+                        @using (Html.BeginForm("Register", "Registration", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="card p-4">
+
+                                <h3 class="text-center">Create Your Account</h3>
+
+                                <h5>Basic Details</h5>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        @Html.LabelFor(m => m.FullName)
+                                        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        @Html.LabelFor(m => m.Email)
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        @Html.LabelFor(m => m.Mobile)
+                                        @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control" })
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        @Html.Label("Register As")
+                                        @Html.DropDownListFor(m => m.Role,
+                                            new List<SelectListItem>
+                                            {
+                                                new SelectListItem{ Text="Select Role", Value="" },
+                                                new SelectListItem{ Text="Candidate", Value="candidate" },
+                                                new SelectListItem{ Text="Recruiter", Value="recruiter" }
+                                            },
+                                            new { @class = "form-control", id = "roleSelect", onchange = "showFields()" })
+                                    </div>
+                                </div>
+
+                                <h5>Password</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        @Html.LabelFor(m => m.Password)
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        @Html.Label("Confirm Password")
+                                        <input type="password" name="ConfirmPassword" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <!-- Candidate -->
+                                <div id="candidateFields" style="display:none;">
+                                    <h5>Candidate Details</h5>
+
+                                    <div class="mb-3">
+                                        @Html.LabelFor(m => m.Skills)
+                                        @Html.TextBoxFor(m => m.Skills, new { @class = "form-control" })
+                                    </div>
+
+                                    <div class="mb-3">
+                                        @Html.LabelFor(m => m.Experience)
+                                        @Html.TextBoxFor(m => m.Experience, new { @class = "form-control", type = "number" })
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label>Upload Resume</label>
+                                        <input type="file" name="ResumeFile" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <!-- Recruiter -->
+                                <div id="recruiterFields" style="display:none;">
+                                    <h5>Company Details</h5>
+
+                                    <div class="mb-3">
+                                        @Html.LabelFor(m => m.CompanyName)
+                                        @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                                    </div>
+
+                                    <div class="mb-3">
+                                        @Html.LabelFor(m => m.CompanyWebsite)
+                                        @Html.TextBoxFor(m => m.CompanyWebsite, new { @class = "form-control" })
+                                    </div>
+
+                                    <div class="mb-3">
+                                        @Html.LabelFor(m => m.CompanyLocation)
+                                        @Html.TextBoxFor(m => m.CompanyLocation, new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-success w-100">Register</button>
+
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+function showFields(){
+    var role = document.getElementById("roleSelect").value;
+    var candidate = document.getElementById("candidateFields");
+    var recruiter = document.getElementById("recruiterFields");
+
+    candidate.style.display = "none";
+    recruiter.style.display = "none";
+
+    if(role === "candidate"){
+        candidate.style.display = "block";
+    }
+    else if(role === "recruiter"){
+        recruiter.style.display = "block";
+    }
+}
+    </script>
+
+</body>
+</html>

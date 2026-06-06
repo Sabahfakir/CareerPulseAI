@@ -1,0 +1,93 @@
+﻿@model JobFinderApp.Models.Job
+@{
+    ViewBag.Title = "PostJob";
+    Layout = "~/Views/Shared/_RecruiterLayout.cshtml";
+}
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="col-md-12 p-4">
+    <div class="card shadow p-4">
+        <h3>Post a New Job</h3>
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">@TempData["Success"]</div>
+        }
+
+        @using (Html.BeginForm("PostJob", "Recruiter", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label>Job Title</label>
+                    @Html.TextBoxFor(m => m.JobTitle, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.JobTitle)
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Category</label>
+                    @Html.DropDownListFor(m => m.JobCategory,
+                        new SelectList(new[] { "IT", "Marketing", "Finance","Human Resource" }),
+                        "Select Category",
+                        new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Location</label>
+                    @Html.TextBoxFor(m => m.Location, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Job Type</label>
+                    @Html.DropDownListFor(m => m.JobType,
+                        new SelectList(new[] { "Full-Time", "Part-Time", "Remote", "Internship" }),
+                        new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Salary Range</label>
+                    @Html.TextBoxFor(m => m.SalaryRange, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Experience</label>
+                    @Html.TextBoxFor(m => m.ExperienceRequired, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label>Skills</label>
+                    @Html.TextBoxFor(m => m.Skills, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label>Description</label>
+                    @Html.TextAreaFor(m => m.JobDescription, new { @class = "form-control", rows = 4 })
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label>Responsibilities</label>
+                    @Html.TextAreaFor(m => m.Responsibilities, new { @class = "form-control", rows = 4 })
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label>Application Deadline</label>
+                    @Html.TextBoxFor(m => m.ApplicationDeadline, "{0:yyyy-MM-dd}",
+                        new { @type = "date", @class = "form-control" })
+                </div>
+
+                <div class="col-md-12 text-end">
+                    <input type="submit" value="Post Job" class="btn btn-primary" />
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+
+
+

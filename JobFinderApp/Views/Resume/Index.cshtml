@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewBag.Title = "Resume Analyzer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+
+    <div class="card p-4 shadow">
+        <h3 class="text-center mb-4">📄 Resume Analyzer</h3>
+
+        <form id="resumeForm" method="post" enctype="multipart/form-data">
+            <input type="file" name="resume" class="form-control mb-3" required />
+
+            <textarea name="jobDescription" class="form-control mb-3" rows="5"
+                      placeholder="Paste job description..." required></textarea>
+
+            <button class="btn btn-primary w-100">Analyze</button>
+        </form>
+    </div>
+
+    <!-- RESULT -->
+    <div id="resultSection" class="mt-5" style="display:none;">
+
+        <!-- SCORE -->
+        <div class="card p-4 mb-3 shadow">
+            <h4>ATS Score</h4>
+            <div class="progress mt-2">
+                <div id="scoreBar" class="progress-bar"></div>
+            </div>
+            <h5 class="mt-2"><span id="scoreText"></span>/100</h5>
+        </div>
+
+        <!-- MISSING -->
+        <div class="card p-4 mb-3 shadow">
+            <h4>Missing Keywords</h4>
+            <div id="missingKeywords"></div>
+        </div>
+
+        <!-- MATCHED -->
+        <div class="card p-4 mb-3 shadow">
+            <h4>Matched Skills</h4>
+            <div id="matchedSkills"></div>
+        </div>
+
+        <!-- SUGGESTIONS -->
+        <div class="card p-4 mb-3 shadow">
+            <h4>Suggestions</h4>
+            <ul id="suggestionsList"></ul>
+        </div>
+
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $("#resumeForm").submit(function (e) {
+            e.preventDefault();
+
+            console.log("AJAX triggered"); // 🔥 DEBUG
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: window.location.origin + '/Resume/Analyze', 
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+
+                    console.log(res); // 🔥 DEBUG
+
+                    if (!res.success) {
+                        alert(res.message);
+                        return;
+                    }
+
+                    $("#resultSection").show();
+
+                    // SCORE
+                    $("#scoreBar").css("width", res.score + "%");
+                    $("#scoreText").text(res.score);
+
+                    // MISSING KEYWORDS
+                    $("#missingKeywords").html("");
+                    res.missing.forEach(function (k) {
+                        $("#missingKeywords").append(
+                            '<span class="badge bg-danger me-2 mb-2">' + k + '</span>'
+                        );
+                    });
+
+                    // MATCHED SKILLS
+                    $("#matchedSkills").html("");
+                    res.matched.forEach(function (k) {
+                        $("#matchedSkills").append(
+                            '<span class="badge bg-success me-2 mb-2">' + k + '</span>'
+                        );
+                    });
+
+                    // SUGGESTIONS
+                    $("#suggestionsList").html("");
+                    res.suggestions.forEach(function (s) {
+                        $("#suggestionsList").append('<li>' + s + '</li>');
+                    });
+                },
+                error: function (err) {
+                    console.log("ERROR:", err);
+                    alert("Something went wrong");
+                }
+            });
+        });
+
+    });
+</script>
+
+
+
+
